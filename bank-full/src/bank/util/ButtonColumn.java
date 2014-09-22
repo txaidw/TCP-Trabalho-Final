@@ -25,7 +25,7 @@ public class ButtonColumn extends AbstractCellEditor
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 5090183202921964451L;
 	
 	private JTable table;
 	private Action action;
