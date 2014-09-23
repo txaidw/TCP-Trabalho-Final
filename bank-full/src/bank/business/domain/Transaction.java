@@ -9,7 +9,7 @@ import java.util.Date;
 public abstract class Transaction {
 	
 	public enum State {
-		FINALIZED, PENDING;
+		FINALIZED, PENDING, CANCELED;
 	}
 
 	private CurrentAccount account;
@@ -24,7 +24,7 @@ public abstract class Transaction {
 		this.date = new Date(System.currentTimeMillis());
 		this.account = account;
 		this.amount = amount;
-		this.state = State.PENDING;
+		this.state = State.FINALIZED;
 	}
 
 	/**

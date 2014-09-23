@@ -4,8 +4,6 @@
 package bank.business.impl;
 
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -72,14 +70,7 @@ public class AccountOperationServiceImpl implements AccountOperationService {
 			else
 				selectedTransactions.add(transaction);
 		}
-
-		Collections.sort(selectedTransactions, new Comparator<Transaction>() {
-			@Override
-			public int compare(Transaction o1, Transaction o2) {
-				return o1.getDate().compareTo(o2.getDate());
-			}
-		});
-
+		
 		return selectedTransactions;
 	}
 

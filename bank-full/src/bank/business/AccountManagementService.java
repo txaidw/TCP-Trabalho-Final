@@ -4,9 +4,12 @@
 package bank.business;
 
 import java.util.Date;
+import java.util.List;
 
 import bank.business.domain.CurrentAccount;
 import bank.business.domain.Employee;
+import bank.business.domain.Transaction;
+import bank.business.domain.Transfer;
 
 /**
  * @author Ingrid Nunes
@@ -20,5 +23,11 @@ public interface AccountManagementService {
 
 	public Employee login(String username, String password)
 			throws BusinessException;
+	
+	public List<Transfer> getAllPendingTransfers();
+	
+	public void authorizeTransaction(Transaction transaction) throws BusinessException;
+	
+	public void cancelTransaction(Transaction transaction) throws BusinessException;
 
 }

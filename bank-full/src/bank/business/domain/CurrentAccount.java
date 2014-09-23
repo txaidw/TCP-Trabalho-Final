@@ -45,7 +45,7 @@ public class CurrentAccount implements Credentials {
 		return deposit;
 	}
 
-	private void depositAmount(double amount) throws BusinessException {
+	public void depositAmount(double amount) throws BusinessException {
 		if (!isValidAmount(amount)) {
 			throw new BusinessException("exception.invalid.amount");
 		}
@@ -120,7 +120,7 @@ public class CurrentAccount implements Credentials {
 		Transfer transfer = new Transfer(location, this, destinationAccount,
 				amount);
 		
-		if (amount > 5000) // adicionar verificação ao setter do amount
+		if (amount > 5000)
 		{
 			transfer.setState(State.PENDING);
 		} else {
