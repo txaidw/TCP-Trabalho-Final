@@ -1,37 +1,36 @@
 public class Revisao {
 
 	private int idArtigo;
-
 	private int idPesquisador;
-
 	private int nota;
-
-	public void setIdArtigo(int idArtigo) {
-
+	
+	public Revisao(int idArtigo, int idPesquisador) {
+		this.idArtigo = idArtigo;
+		this.idPesquisador = idPesquisador;
 	}
 
+	// getters and setters
 	public int getIdArtigo() {
-		return 0;
+		return idArtigo;
 	}
-
-	public void setIdPesquisador(int idPesquisador) {
-
+	
+	public void setIdArtigo(int idArtigo) {
+		this.idArtigo = idArtigo;
 	}
-
+	
 	public int getIdPesquisador() {
-		return 0;
+		return idPesquisador;
 	}
-
-	public void setNota(int nota) {
-
+	
+	public void setIdPesquisador(int idPesquisador) {
+		this.idPesquisador = idPesquisador;
 	}
-
+	
 	public int getNota() {
-		return 0;
+		return nota;
 	}
-
-	protected void Revisao(int idArtigo, int idPesquisador) {
-
+	
+	public void setNota(int nota) {
+		this.nota = nota;
 	}
-
 }

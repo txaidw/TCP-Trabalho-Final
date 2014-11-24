@@ -3,25 +3,37 @@ import java.util.List;
 public class Conferencia {
 
 	private String sigla;
-
 	private List<Artigo> artigos;
+	private List<Pesquisador> membros;
 
-	private List<Number> membros;
-
-	public void setSigla(String sigla) {
-
+	public Conferencia(String sigla, List<Pesquisador> membros) {
+		super();
+		this.sigla = sigla;
+		this.membros = membros;
 	}
 
+	// getters and setters
 	public String getSigla() {
-		return null;
+		return sigla;
 	}
-
+	
+	public void setSigla(String sigla) {
+		this.sigla = sigla;
+	}
+	
 	public List<Artigo> getArtigos() {
-		return null;
+		return artigos;
 	}
-
-	public List<Number> getMembros() {
-		return null;
+	
+	public void setArtigos(List<Artigo> artigos) {
+		this.artigos = artigos;
 	}
-
+	
+	public List<Pesquisador> getMembros() {
+		return membros;
+	}
+	
+	public void setMembros(List<Pesquisador> membros) {
+		this.membros = membros;
+	}
 }

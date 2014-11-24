@@ -1,53 +1,65 @@
-public class Artigo {
-
+public class Artigo implements Comparable<Artigo> {
 	private int id;
-
-	private String nome;
-
-	private int idPesquisador;
-
-	private String conferencia;
-
+	private String titulo;
+	private Pesquisador autor;
+	private Conferencia conferencia;
 	private String topicoPesquisa;
-
-	public void setId(int id) {
-
+	
+	public Artigo(int id, String titulo, Pesquisador autor,
+			Conferencia conferencia, String topicoPesquisa) {
+		super();
+		this.id = id;
+		this.titulo = titulo;
+		this.autor = autor;
+		this.conferencia = conferencia;
+		this.topicoPesquisa = topicoPesquisa;
 	}
 
+	// getters and setters
 	public int getId() {
-		return 0;
+		return id;
 	}
-
-	public void setNome(String nome) {
-
+	
+	public void setId(int id) {
+		this.id = id;
 	}
-
-	public String getNome() {
-		return null;
+	
+	public String getTitulo() {
+		return titulo;
 	}
-
-	public void setIdPesquisador(int idPesquisador) {
-
+	
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
-
-	public int getIdPesquisador() {
-		return 0;
+	
+	public Pesquisador getAutor() {
+		return autor;
 	}
-
-	public void setConferencia(String conferencia) {
-
+	
+	public void setAutor(Pesquisador autor) {
+		this.autor = autor;
 	}
-
-	public String getConferencia() {
-		return null;
+	public Conferencia getConferencia() {
+		return conferencia;
 	}
-
-	public void setTopicoPesquisa(String topicoPesquisa) {
-
+	
+	public void setConferencia(Conferencia conferencia) {
+		this.conferencia = conferencia;
 	}
-
+	
 	public String getTopicoPesquisa() {
-		return null;
+		return topicoPesquisa;
+	}
+	
+	public void setTopicoPesquisa(String topicoPesquisa) {
+		this.topicoPesquisa = topicoPesquisa;
 	}
 
+	@Override
+	public int compareTo(Artigo artigo) {
+		Integer artigo1Id = new Integer(this.id);
+		Integer artigo2Id = new Integer(artigo.getId());
+		return artigo1Id.compareTo(artigo2Id);
+	}
+	
 }
