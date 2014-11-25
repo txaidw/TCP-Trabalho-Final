@@ -18,7 +18,7 @@ public class ComiteServico {
 	public void alocaArtigos(String siglaConferencia, int numRevisores) {
 		
 		this.log.clear();
-		this.addLog("Iniciando alocação de " + numRevisores + " revisores para conferência: " + siglaConferencia  + "\n");
+		this.addLog("Iniciando alocaÃ§Ã£oo de " + numRevisores + " revisores para conferÃªncia: " + siglaConferencia  + "\n");
 		
 		Conferencia conferencia = this.database.getConferencia(siglaConferencia);
 		List<Pesquisador> membros = conferencia.getMembros();
@@ -38,14 +38,17 @@ public class ComiteServico {
 
 				List<Pesquisador> membrosSelecionados = this.selecionarMembros(
 						membros, artigoComMenorId);
+				
 				List<Pesquisador> membrosSelecionadosOrdenado = this
 						.ordenaMembrosSelecionados(membrosSelecionados,
 								artigosAlocadosPorPesquisador);
 
+				
 				Pesquisador revisor = membrosSelecionadosOrdenado.get(0);
-
-				this.database.save(new Revisao(artigoComMenorId.getId(),
-						revisor.getId()));
+				
+				
+				
+				artigoComMenorId.addRevisao(new Revisao( artigoComMenorId.getId(), revisor.getId()));
 				
 				this.addLog("Artigo id " + artigoComMenorId.getId() + " alocado ao revisor id " + revisor.getId() + "\n");
 				
@@ -56,8 +59,9 @@ public class ComiteServico {
 			}
 		}
 		conferencia.setSobRevisao(true);
-		this.addLog("Fim da alocação" + "\n" + "\n");
+		this.addLog("Fim da alocaÃ§Ã£o" + "\n" + "\n");
 	}
+
 
 	public void atribuiNota(Revisao revisao) {
 
@@ -84,18 +88,29 @@ public class ComiteServico {
 	}
 	
 	
-	// métodos privados
+	// mÃ©todos privados
 	private List<Pesquisador> selecionarMembros(List<Pesquisador> candidatos, Artigo artigo) {
 		
 		List<Pesquisador> membrosSelecionados = new ArrayList<>();
 		
 		for (Pesquisador pesquisador : candidatos) {
-			if (!(pesquisador.getNome().equals(artigo.getAutor().getNome()) || pesquisador.getAfiliacao().equals(artigo.getAutor().getAfiliacao()) || !pesquisador.getTopicosInteresse().contains(artigo.getTopicoPesquisa()))) {
-				membrosSelecionados.add(pesquisador);
+			if (!(pesquisador.getId() == artigo.getAutor().getId()) ) {
+				if (!(pesquisador.getAfiliacao().equals(artigo.getAutor().getAfiliacao()))) {
+					if (pesquisador.getTopicosInteresse().contains(artigo.getTopicoPesquisa())) {
+						
+						Boolean ehIgual = false;
+						for (Revisao rev : artigo.getRevisoes()) {
+							if (pesquisador.getId() == rev.getIdPesquisador()) {
+								ehIgual = true;
+							}
+						}
+						if (!ehIgual) {
+							membrosSelecionados.add(pesquisador);	
+						}
+					}
+				}
 			}
 		}
-		
-		
 		
 		return membrosSelecionados;
 	}

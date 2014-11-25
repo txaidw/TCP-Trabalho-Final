@@ -1,9 +1,13 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Artigo implements Comparable<Artigo> {
 	private int id;
 	private String titulo;
 	private Pesquisador autor;
 	private Conferencia conferencia;
 	private String topicoPesquisa;
+	private List<Revisao> revisoes;
 	
 	public Artigo(int id, String titulo, Pesquisador autor,
 			Conferencia conferencia, String topicoPesquisa) {
@@ -13,6 +17,7 @@ public class Artigo implements Comparable<Artigo> {
 		this.autor = autor;
 		this.conferencia = conferencia;
 		this.topicoPesquisa = topicoPesquisa;
+		this.revisoes = new ArrayList<Revisao>();
 	}
 
 	// getters and setters
@@ -61,5 +66,16 @@ public class Artigo implements Comparable<Artigo> {
 		Integer artigo2Id = new Integer(artigo.getId());
 		return artigo1Id.compareTo(artigo2Id);
 	}
+
+	public List<Revisao> getRevisoes() {
+		return revisoes;
+	}
+
+	public void setRevisoes(List<Revisao> revisoes) {
+		this.revisoes = revisoes;
+	}
 	
+	public void addRevisao(Revisao revisao) {
+		this.revisoes.add(revisao);
+	}
 }
