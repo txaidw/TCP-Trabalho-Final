@@ -1,5 +1,4 @@
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -12,6 +11,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerNumberModel;
 
 import java.awt.GridLayout;
 import java.util.List;
@@ -134,6 +134,7 @@ public class AtribuirNotas extends JDialog {
 				}
 				{
 					JSpinner spinner = new JSpinner();
+					spinner.setModel(new SpinnerNumberModel(0, -3, 3, 1));
 					leftBtnPane.add(spinner);
 				}
 				{
