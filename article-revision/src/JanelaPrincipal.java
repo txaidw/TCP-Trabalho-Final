@@ -12,7 +12,7 @@ public class JanelaPrincipal {
 
 	private JFrame frmRevisoDeArtigos;
 	private final Database database;
-	private final Comite comite;
+	private final ComiteServico comite;
 
 	/**
 	 * Launch the application.
@@ -35,7 +35,7 @@ public class JanelaPrincipal {
 	 */
 	public JanelaPrincipal() {
 		database = new Database(true);
-		comite = new Comite(database);
+		comite = new ComiteServico(database);
 
 		initializeGui();
 	}

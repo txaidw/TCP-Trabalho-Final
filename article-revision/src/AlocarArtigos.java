@@ -25,13 +25,13 @@ public class AlocarArtigos extends JDialog {
 	private JComboBox<String> conferenciaCbBx;
 	private JSpinner numRevisoresSpn;
 	private JTextArea logTextArea;
-	private Comite comite;
+	private ComiteServico comiteServico;
 
 	/**
 	 * Create the dialog.
 	 */
-	public AlocarArtigos(Comite comite) {
-		this.comite = comite;
+	public AlocarArtigos(ComiteServico comiteServico) {
+		this.comiteServico = comiteServico;
 		initilizeGui();
 	}
 
@@ -66,7 +66,7 @@ public class AlocarArtigos extends JDialog {
 				{
 					conferenciaCbBx = new JComboBox<String>();
 					LeftBtnPane.add(conferenciaCbBx);
-					for (String siglaConferencia : comite.getConferenciaSiglasNaoAlocadas())
+					for (String siglaConferencia : comiteServico.getConferenciaSiglasNaoAlocadas())
 						conferenciaCbBx.addItem(siglaConferencia);
 				}
 				{
@@ -78,11 +78,11 @@ public class AlocarArtigos extends JDialog {
 					alocarButton.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							if (conferenciaCbBx.getItemCount() > 0) {
-								comite.alocaArtigos(conferenciaCbBx.getItemAt(0), (Integer)numRevisoresSpn.getValue());
+								comiteServico.alocaArtigos(conferenciaCbBx.getItemAt(0), (Integer)numRevisoresSpn.getValue());
 								conferenciaCbBx.removeAllItems();
-								for (String siglaConferencia : comite.getConferenciaSiglasNaoAlocadas())
+								for (String siglaConferencia : comiteServico.getConferenciaSiglasNaoAlocadas())
 									conferenciaCbBx.addItem(siglaConferencia);
-								for (String logLine : comite.getLog()) 
+								for (String logLine : comiteServico.getLog()) 
 										logTextArea.append(logLine);
 							}
 							else {
