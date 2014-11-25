@@ -9,7 +9,6 @@ public class Database {
 	private final Map<Integer, Pesquisador> pesquisadores;
 	private final Map<String, Conferencia> conferencias;
 	private final Map<Integer, Artigo> artigos;
-	private final List<Revisao> revisoes;
 	
 	public Database() {
 		this(true);
@@ -19,7 +18,6 @@ public class Database {
 		pesquisadores = new HashMap<>();
 		conferencias = new HashMap<>();
 		artigos = new HashMap<>();
-		revisoes = new ArrayList<>();
 		if (initData) {
 			initData();
 		}
@@ -37,7 +35,7 @@ public class Database {
 			topicosInteresse1.add("Software Product Lines");
 			topicosInteresse1.add("Software Reuse");
 			topicosInteresse1.add("Modularity");
-			Pesquisador p1 = new Pesquisador(++id, "João", "UFRGS", topicosInteresse1);
+			Pesquisador p1 = new Pesquisador(++id, "Joï¿½o", "UFRGS", topicosInteresse1);
 			save(p1);
 			
 			Collection<String> topicosInteresse2 = new ArrayList<>();
@@ -103,7 +101,7 @@ public class Database {
 			Pesquisador p10 = new Pesquisador(++id, "Carlos", "USP", topicosInteresse10);
 			save(p10);
 			
-			// confrências
+			// confÃªncias
 			List<Pesquisador> m1 = new ArrayList<>();
 			m1.add(p1); m1.add(p2); m1.add(p3); m1.add(p4); m1.add(p5); m1.add(p6); m1.add(p7);
 			Conferencia c1 = new Conferencia("ICSE", m1);
@@ -152,10 +150,6 @@ public class Database {
 		this.artigos.put(artigo.getId(), artigo);
 	}
 	
-	public void save(Revisao revisao) {
-		this.revisoes.add(revisao);
-	}
-	
 	// setters and getters
 	public Conferencia getConferencia(String conferencia) {
 		return this.conferencias.get(conferencia);
@@ -173,9 +167,6 @@ public class Database {
 		return artigos.values();
 	}
 
-	public List<Revisao> getAllRevisoes() {
-		return revisoes;
-	}
 
 	public List<Artigo> getArtigos(String conferencia) {
 		Collection<Artigo> artigos = this.getAllArtigos();
@@ -188,7 +179,4 @@ public class Database {
 		return artigosDaConferencia;
 	}
 
-	public List<Revisao> getRevisoes(int idArtigo) {
-		return null;
-	}
 }
