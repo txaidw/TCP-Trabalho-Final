@@ -92,9 +92,13 @@ public class ComiteServico {
 	private List<Pesquisador> selecionarMembros(List<Pesquisador> candidatos, Artigo artigo) {
 		
 		List<Pesquisador> membrosSelecionados = new ArrayList<>();
-		
+		System.out.println("ID: "+artigo.getId());
 		for (Pesquisador pesquisador : candidatos) {
 			if (!(pesquisador.getId() == artigo.getAutor().getId()) ) {
+				
+				System.out.println("PES: "+pesquisador.getAfiliacao());
+				System.out.println("AFI: "+artigo.getAutor().getAfiliacao());
+
 				if (!(pesquisador.getAfiliacao().equals(artigo.getAutor().getAfiliacao()))) {
 					if (pesquisador.getTopicosInteresse().contains(artigo.getTopicoPesquisa())) {
 						

@@ -35,7 +35,7 @@ public class Database {
 			topicosInteresse1.add("Software Product Lines");
 			topicosInteresse1.add("Software Reuse");
 			topicosInteresse1.add("Modularity");
-			Pesquisador p1 = new Pesquisador(++id, "Jo�o", "UFRGS", topicosInteresse1);
+			Pesquisador p1 = new Pesquisador(++id, "Joao", "UFRGS", topicosInteresse1);
 			save(p1);
 			
 			Collection<String> topicosInteresse2 = new ArrayList<>();
