@@ -86,7 +86,7 @@ public class AlocarArtigos extends JDialog {
 										logTextArea.append(logLine);
 							}
 							else {
-								logTextArea.append("AVISO: Todas conferências já possuem revisores alocados!\n");
+								logTextArea.append("AVISO: Todas conferï¿½ncias jï¿½ possuem revisores alocados!\n");
 							}
 
 						}
@@ -104,9 +104,9 @@ public class AlocarArtigos extends JDialog {
 				JPanel RightBtnPane = new JPanel();
 				BtnPane.add(RightBtnPane, BorderLayout.EAST);
 				{
-					JButton sairButton = new JButton("Sair");
-					RightBtnPane.add(sairButton);
-					sairButton.addActionListener(new ActionListener() {
+					JButton voltarButton = new JButton("Voltar");
+					RightBtnPane.add(voltarButton);
+					voltarButton.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							dispose();
 						}
@@ -120,6 +120,7 @@ public class AlocarArtigos extends JDialog {
 			logPanel.setLayout(new BorderLayout(0, 0));
 			
 			logTextArea = new JTextArea();
+			logTextArea.setEditable(false);
 			logTextArea.setLineWrap(true);
 			
 			JScrollPane logScrollPane = new JScrollPane(logTextArea);

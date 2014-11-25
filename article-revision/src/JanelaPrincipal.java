@@ -46,6 +46,7 @@ public class JanelaPrincipal {
 	private void initializeGui() {
 
 		frmRevisoDeArtigos = new JFrame();
+		frmRevisoDeArtigos.setResizable(false);
 		frmRevisoDeArtigos.setTitle("Revis\u00E3o de artigos");
 		frmRevisoDeArtigos.setBounds(100, 100, 478, 118);
 		frmRevisoDeArtigos.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,6 +64,12 @@ public class JanelaPrincipal {
 		frmRevisoDeArtigos.getContentPane().add(btnAlocarArtigos);
 		
 		JButton btnAtribuirNotas = new JButton("Atribuir Notas");
+		btnAtribuirNotas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AtribuirNotas atribuirNotas = new AtribuirNotas(comite);
+				atribuirNotas.setVisible(true);
+			}
+		});
 		btnAtribuirNotas.setBounds(163, 11, 143, 71);
 		frmRevisoDeArtigos.getContentPane().add(btnAtribuirNotas);
 		
