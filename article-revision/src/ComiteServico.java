@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -87,6 +88,26 @@ public class ComiteServico {
 		return siglas;
 	}
 	
+	public List<Artigo> getArtigosSobRevisao() {
+		Collection<Artigo> artigos = database.getAllArtigos();
+		List<Artigo> artigosSobRevisao = new ArrayList<Artigo>();
+		for (Artigo artigo : artigos) {
+			if (!artigo.getRevisoes().isEmpty()) {
+				artigosSobRevisao.add(artigo);
+			}
+		}
+		Collections.sort(artigosSobRevisao, new Comparator<Artigo>() {
+			 @Override
+	         public int compare(Artigo a1, Artigo a2) {
+				 return a1.getTitulo().compareTo(a2.getTitulo());
+			 }
+		});
+		return artigosSobRevisao;
+	}
+	
+	public Pesquisador getPesquisador(int id) {
+		return database.getPesquisador(id);
+	}
 	
 	// métodos privados
 	private List<Pesquisador> selecionarMembros(List<Pesquisador> candidatos, Artigo artigo) {

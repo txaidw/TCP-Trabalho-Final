@@ -158,6 +158,10 @@ public class Database {
 	public Collection<Conferencia> getAllConferencias() {
 		return conferencias.values();
 	}
+	
+	public Pesquisador getPesquisador(int id) {
+		return pesquisadores.get(id);
+	}
 
 	public Collection<Pesquisador> getAllPesquisadores() {
 		return pesquisadores.values();

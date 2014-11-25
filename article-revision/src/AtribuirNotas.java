@@ -1,7 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
-import javax.management.StringValueExp;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -11,13 +10,11 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.ListSelectionModel;
 
 import java.awt.GridLayout;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.MouseAdapter;
+import java.util.List;
 
 import javax.swing.ScrollPaneConstants;
 
@@ -31,7 +28,10 @@ public class AtribuirNotas extends JDialog {
 	private JList<String> artigosList;
 	DefaultListModel<String> artigosListModel;
 	private JList<String> revisoesList;
-	DefaultListModel<String> revisoesListModel;
+	private DefaultListModel<String> revisoesListModel; 
+	private List<Artigo> artigosSobRevisao;
+	private List<Revisao> revisoesSelecionadas;
+	
 
 	/**
 	 * Create the dialog.
@@ -39,11 +39,13 @@ public class AtribuirNotas extends JDialog {
 	public AtribuirNotas(ComiteServico comiteServico) {
 		setModal(true);
 		this.comiteServico = comiteServico;
+		this.artigosSobRevisao = comiteServico.getArtigosSobRevisao();
 		this.initializeGui();
 	}
 
 	private void initializeGui() {
-		setBounds(100, 100, 728, 496);
+		
+		setBounds(100, 100, 611, 299);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -64,23 +66,24 @@ public class AtribuirNotas extends JDialog {
 		{
 			JPanel listsPanel = new JPanel();
 			contentPanel.add(listsPanel, BorderLayout.CENTER);
-			listsPanel.setLayout(new BoxLayout(listsPanel, BoxLayout.X_AXIS));
 			{
 				artigosListModel = new DefaultListModel<String>();
-				artigosListModel.addElement("Artigo #1");
-				artigosListModel.addElement("Artigo #2");
-				artigosListModel.addElement("Artigo #3");
-
+				for (Artigo artigo : artigosSobRevisao)
+					artigosListModel.addElement(artigo.getTitulo());
+				
 				artigosList = new JList<String>(artigosListModel);
+				
 				ListSelectionModel artigosSelectionModel = artigosList.getSelectionModel();
 				artigosSelectionModel.addListSelectionListener(new ListSelectionListener() {
 					
 					@Override
 					public void valueChanged(ListSelectionEvent e) {
 						if (!e.getValueIsAdjusting()) {
+							updateRevisoesList(artigosList.getSelectedIndex());
 						}					
 					}
 				});
+				listsPanel.setLayout(new GridLayout(0, 2, 0, 0));
 				
 				JScrollPane artigosScrlPane = new JScrollPane(artigosList);
 				artigosScrlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -90,6 +93,19 @@ public class AtribuirNotas extends JDialog {
 				revisoesListModel = new DefaultListModel<String>();
 				
 				revisoesList = new JList<String>(revisoesListModel);
+				
+				ListSelectionModel revisoesListSelectionModel = revisoesList.getSelectionModel();
+				revisoesListSelectionModel.addListSelectionListener(new ListSelectionListener() {
+					
+					@Override
+					public void valueChanged(ListSelectionEvent e) {
+						if (!e.getValueIsAdjusting()) {
+							System.out.println("bu");
+						}					
+					}
+				});
+				
+				
 				JScrollPane revisoesScrlPane = new JScrollPane(revisoesList);
 				revisoesScrlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 				listsPanel.add(revisoesScrlPane);
@@ -111,5 +127,15 @@ public class AtribuirNotas extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+	
+	private void updateRevisoesList(int selectedArtigoIndex) {
+
+		revisoesListModel.clear();
+		
+		revisoesSelecionadas = artigosSobRevisao.get(selectedArtigoIndex).getRevisoes();
+		
+		for (Revisao revisao : revisoesSelecionadas)
+			revisoesListModel.addElement(comiteServico.getPesquisador(revisao.getIdPesquisador()).getNome());
 	}
 }
