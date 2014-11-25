@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -15,11 +16,13 @@ public class Comite {
 		this.log = new ArrayList<>();
 	}
 
-	public void alocaArtigos(String conferencia, int numRevisores) {
+	public void alocaArtigos(String siglaConferencia, int numRevisores) {
 		
-		this.addLog("Iniciando alocação...");
+		this.log.clear();
+		this.addLog("Iniciando alocação de " + numRevisores + " revisores para conferência: " + siglaConferencia  + "\n");
 		
-		List<Pesquisador> membros = this.database.getConferencia(conferencia).getMembros();
+		Conferencia conferencia = this.database.getConferencia(siglaConferencia);
+		List<Pesquisador> membros = conferencia.getMembros();
 	
 		Map<Integer, Integer> artigosAlocadosPorPesquisador = new HashMap<Integer, Integer>();
 		for (Pesquisador pesquisador : membros) {
@@ -27,7 +30,7 @@ public class Comite {
 		}
 	
 		for (int i = 0; i < numRevisores; i++) {
-			List<Artigo> artigos = this.database.getArtigos(conferencia);
+			List<Artigo> artigos = this.database.getArtigos(siglaConferencia);
 			Collections.sort(artigos);
 			
 			while (!artigos.isEmpty()) {
@@ -45,17 +48,16 @@ public class Comite {
 				this.database.save(new Revisao(artigoComMenorId.getId(),
 						revisor.getId()));
 				
-				this.addLog("Artigo id " + artigoComMenorId.getId() + " alocado ao revisor id " + revisor.getId());
+				this.addLog("Artigo id " + artigoComMenorId.getId() + " alocado ao revisor id " + revisor.getId() + "\n");
 				
 				Integer alocacoes = artigosAlocadosPorPesquisador.get(revisor.getId());
 				artigosAlocadosPorPesquisador.put(revisor.getId(), ++alocacoes);
 				
 				artigos.remove(0);
-
 			}
 		}
-		
-		this.addLog("Fim da alocação");
+		conferencia.setSobRevisao(true);
+		this.addLog("Fim da alocação" + "\n" + "\n");
 	}
 
 	public void atribuiNota(Revisao revisao) {
@@ -66,17 +68,45 @@ public class Comite {
 
 	}
 
-	public void alocacao() {
-		
-	}
-
-	public void atribuicao() {
-
+	
+	public boolean validarSiglaConferencia(String sigla) {
+		Collection<Conferencia> conferencias = database.getAllConferencias();
+		for (Conferencia conferencia : conferencias)
+			if (conferencia.getSigla().equals(sigla))
+				return true;
+		return false;
 	}
 	
-	public void selecao() {
-
+	public boolean validarNumRevisoresConferencia(int numRevisores) {
+		if (numRevisores >= 2 && numRevisores <= 5)
+			return true;
+		else
+			return false;
 	}
+	
+	public boolean validarParametrosAlocacaoConferencia(String sigla, int numRevisores) {
+		if (validarSiglaConferencia(sigla) && validarNumRevisoresConferencia(numRevisores))
+			return true;
+		else
+			return false;
+	}
+	
+	// getters
+	public List<String> getConferenciaSiglas() {
+		List<String> siglas = new ArrayList<>();
+		for (Conferencia conferencia : database.getAllConferencias())
+			siglas.add(conferencia.getSigla());
+		return siglas;
+	}
+	
+	public List<String> getConferenciaSiglasNaoAlocadas() {
+		List<String> siglas = new ArrayList<>();
+		for (Conferencia conferencia : database.getAllConferencias())
+			if (!conferencia.isSobRevisao())
+				siglas.add(conferencia.getSigla());
+		return siglas;
+	}
+	
 	
 	// métodos privados
 	private List<Pesquisador> selecionarMembros(List<Pesquisador> candidatos, Artigo artigo) {

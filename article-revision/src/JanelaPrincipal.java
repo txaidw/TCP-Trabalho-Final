@@ -1,9 +1,6 @@
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
-import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 
@@ -13,7 +10,9 @@ import java.awt.event.ActionEvent;
 
 public class JanelaPrincipal {
 
-	private JFrame frame;
+	private JFrame frmRevisoDeArtigos;
+	private final Database database;
+	private final Comite comite;
 
 	/**
 	 * Launch the application.
@@ -23,7 +22,7 @@ public class JanelaPrincipal {
 			public void run() {
 				try {
 					JanelaPrincipal window = new JanelaPrincipal();
-					window.frame.setVisible(true);
+					window.frmRevisoDeArtigos.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -35,36 +34,45 @@ public class JanelaPrincipal {
 	 * Create the application.
 	 */
 	public JanelaPrincipal() {
-		initialize();
+		database = new Database(true);
+		comite = new Comite(database);
+
+		initializeGui();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 144, 120);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+	private void initializeGui() {
+
+		frmRevisoDeArtigos = new JFrame();
+		frmRevisoDeArtigos.setTitle("Revis\u00E3o de artigos");
+		frmRevisoDeArtigos.setBounds(100, 100, 478, 118);
+		frmRevisoDeArtigos.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JButton btnAlocarArtigos = new JButton("Alocar artigos");
+		btnAlocarArtigos.setBounds(10, 11, 143, 71);
 		btnAlocarArtigos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				AlocarArtigos alocarArtigos = new AlocarArtigos();
+				AlocarArtigos alocarArtigos = new AlocarArtigos(comite);
 				alocarArtigos.setVisible(true);
 			}
 		});
-		frame.getContentPane().add(btnAlocarArtigos);
+		
+		frmRevisoDeArtigos.getContentPane().setLayout(null);
+		frmRevisoDeArtigos.getContentPane().add(btnAlocarArtigos);
 		
 		JButton btnAtribuirNotas = new JButton("Atribuir Notas");
-		frame.getContentPane().add(btnAtribuirNotas);
+		btnAtribuirNotas.setBounds(163, 11, 143, 71);
+		frmRevisoDeArtigos.getContentPane().add(btnAtribuirNotas);
 		
 		JButton btnSelecionarArtigos = new JButton("Selecionar Artigos");
+		btnSelecionarArtigos.setBounds(316, 11, 143, 71);
 		btnSelecionarArtigos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		frame.getContentPane().add(btnSelecionarArtigos);
+		frmRevisoDeArtigos.getContentPane().add(btnSelecionarArtigos);
 	}
 
 }

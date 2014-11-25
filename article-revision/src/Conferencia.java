@@ -5,11 +5,13 @@ public class Conferencia {
 	private String sigla;
 	private List<Artigo> artigos;
 	private List<Pesquisador> membros;
+	private boolean sobRevisao;
 
 	public Conferencia(String sigla, List<Pesquisador> membros) {
 		super();
 		this.sigla = sigla;
 		this.membros = membros;
+		this.setSobRevisao(false);
 	}
 
 	// getters and setters
@@ -35,5 +37,13 @@ public class Conferencia {
 	
 	public void setMembros(List<Pesquisador> membros) {
 		this.membros = membros;
+	}
+
+	public boolean isSobRevisao() {
+		return sobRevisao;
+	}
+
+	public void setSobRevisao(boolean sobRevisao) {
+		this.sobRevisao = sobRevisao;
 	}
 }

@@ -5,42 +5,41 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.Window.Type;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
+import javax.swing.JComboBox;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class AlocarArtigos extends JDialog {
 
+	private static final long serialVersionUID = 8242945255849979062L;
+	
 	private final JPanel contentPanel = new JPanel();
-	private JTextField numRevisoresTxtFld;
-	private JTextField ConferenciaTxtFld;
-	private JTextField textField_2;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			AlocarArtigos dialog = new AlocarArtigos();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	private JComboBox<String> conferenciaCbBx;
+	private JSpinner numRevisoresSpn;
+	private JTextArea logTextArea;
+	private Comite comite;
 
 	/**
 	 * Create the dialog.
 	 */
-	public AlocarArtigos() {
-		setModal(false);
+	public AlocarArtigos(Comite comite) {
+		this.comite = comite;
+		initilizeGui();
+	}
+
+	private void initilizeGui() {
+		setModal(true);
 		setTitle("Alocar artigos");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 511, 297);
+		setBounds(100, 100, 623, 400);
 		getContentPane().setLayout(new BorderLayout());
 		FlowLayout fl_contentPanel = new FlowLayout();
 		fl_contentPanel.setAlignment(FlowLayout.LEFT);
@@ -53,49 +52,79 @@ public class AlocarArtigos extends JDialog {
 			contentPanel.add(lblLog);
 		}
 		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			JPanel BtnPane = new JPanel();
+			getContentPane().add(BtnPane, BorderLayout.SOUTH);
+			BtnPane.setLayout(new BorderLayout(0, 0));
 			{
-				JLabel lblConferncia = new JLabel("Confer\u00EAncia");
-				buttonPane.add(lblConferncia);
-			}
-			{
-				ConferenciaTxtFld = new JTextField();
-				buttonPane.add(ConferenciaTxtFld);
-				ConferenciaTxtFld.setColumns(10);
-			}
-			{
-				JLabel lblNmeroDeRevisores = new JLabel("N\u00FAmero de revisores:");
-				buttonPane.add(lblNmeroDeRevisores);
-			}
-			{
-				numRevisoresTxtFld = new JTextField();
-				buttonPane.add(numRevisoresTxtFld);
-				numRevisoresTxtFld.setColumns(10);
-			}
-			{
-				JButton alocarButton = new JButton("Alocar");
-				alocarButton.setActionCommand("OK");
-				buttonPane.add(alocarButton);
-				getRootPane().setDefaultButton(alocarButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						dispose();
+				JPanel LeftBtnPane = new JPanel();
+				BtnPane.add(LeftBtnPane, BorderLayout.WEST);
+				LeftBtnPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+				{
+					JLabel lblConferncia = new JLabel("Confer\u00EAncia:");
+					LeftBtnPane.add(lblConferncia);
+				}
+				{
+					conferenciaCbBx = new JComboBox<String>();
+					LeftBtnPane.add(conferenciaCbBx);
+					for (String siglaConferencia : comite.getConferenciaSiglasNaoAlocadas())
+						conferenciaCbBx.addItem(siglaConferencia);
+				}
+				{
+					JLabel lblNmeroDeRevisores = new JLabel("N\u00FAmero de revisores:");
+					LeftBtnPane.add(lblNmeroDeRevisores);
+				}
+				{
+					JButton alocarButton = new JButton("Alocar");
+					alocarButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							if (conferenciaCbBx.getItemCount() > 0) {
+								comite.alocaArtigos(conferenciaCbBx.getItemAt(0), (Integer)numRevisoresSpn.getValue());
+								conferenciaCbBx.removeAllItems();
+								for (String siglaConferencia : comite.getConferenciaSiglasNaoAlocadas())
+									conferenciaCbBx.addItem(siglaConferencia);
+								for (String logLine : comite.getLog()) 
+										logTextArea.append(logLine);
+							}
+							else {
+								logTextArea.append("AVISO: Todas conferências já possuem revisores alocados!\n");
+							}
+
+						}
+					});
+					{
+						numRevisoresSpn = new JSpinner();
+						numRevisoresSpn.setModel(new SpinnerNumberModel(2, 2, 5, 1));
+						LeftBtnPane.add(numRevisoresSpn);
 					}
-				});
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
+					LeftBtnPane.add(alocarButton);
+					getRootPane().setDefaultButton(alocarButton);
+				}
+			}
+			{
+				JPanel RightBtnPane = new JPanel();
+				BtnPane.add(RightBtnPane, BorderLayout.EAST);
+				{
+					JButton sairButton = new JButton("Sair");
+					RightBtnPane.add(sairButton);
+					sairButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							dispose();
+						}
+					});
+				}
 			}
 		}
 		{
-			textField_2 = new JTextField();
-			getContentPane().add(textField_2, BorderLayout.CENTER);
-			textField_2.setColumns(10);
+			JPanel logPanel = new JPanel();
+			getContentPane().add(logPanel, BorderLayout.CENTER);
+			logPanel.setLayout(new BorderLayout(0, 0));
+			
+			logTextArea = new JTextArea();
+			logTextArea.setLineWrap(true);
+			
+			JScrollPane logScrollPane = new JScrollPane(logTextArea);
+			logPanel.add(logScrollPane, BorderLayout.CENTER);
 		}
 	}
-
+	
 }
