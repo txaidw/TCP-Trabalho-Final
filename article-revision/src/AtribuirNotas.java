@@ -17,6 +17,7 @@ import java.awt.GridLayout;
 import java.util.List;
 
 import javax.swing.ScrollPaneConstants;
+import javax.swing.JSpinner;
 
 
 public class AtribuirNotas extends JDialog {
@@ -112,19 +113,35 @@ public class AtribuirNotas extends JDialog {
 			}
 		}
 		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			JPanel btnPane = new JPanel();
+			getContentPane().add(btnPane, BorderLayout.SOUTH);
+			btnPane.setLayout(new BorderLayout(0, 0));
 			{
-				JButton okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				JPanel rightBtnPane = new JPanel();
+				btnPane.add(rightBtnPane, BorderLayout.EAST);
+				{
+					JButton prontoButton = new JButton("Pronto");
+					rightBtnPane.add(prontoButton);
+					prontoButton.setActionCommand("Cancel");
+				}
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
+				JPanel leftBtnPane = new JPanel();
+				btnPane.add(leftBtnPane, BorderLayout.WEST);
+				{
+					JLabel lblAtrubuirNota = new JLabel("Atrubuir nota:");
+					leftBtnPane.add(lblAtrubuirNota);
+				}
+				{
+					JSpinner spinner = new JSpinner();
+					leftBtnPane.add(spinner);
+				}
+				{
+					JButton okButton = new JButton("OK");
+					leftBtnPane.add(okButton);
+					okButton.setActionCommand("OK");
+					getRootPane().setDefaultButton(okButton);
+				}
 			}
 		}
 	}
