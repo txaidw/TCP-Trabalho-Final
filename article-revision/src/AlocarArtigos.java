@@ -104,9 +104,9 @@ public class AlocarArtigos extends JDialog {
 				JPanel RightBtnPane = new JPanel();
 				BtnPane.add(RightBtnPane, BorderLayout.EAST);
 				{
-					JButton voltarButton = new JButton("Voltar");
-					RightBtnPane.add(voltarButton);
-					voltarButton.addActionListener(new ActionListener() {
+					JButton ProntoButton = new JButton("Pronto");
+					RightBtnPane.add(ProntoButton);
+					ProntoButton.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							dispose();
 						}

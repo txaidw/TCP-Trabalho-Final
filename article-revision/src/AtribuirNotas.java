@@ -19,6 +19,8 @@ import java.util.List;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JSpinner;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AtribuirNotas extends JDialog {
 
@@ -32,12 +34,14 @@ public class AtribuirNotas extends JDialog {
 	private DefaultListModel<String> revisoesListModel; 
 	private List<Artigo> artigosSobRevisao;
 	private List<Revisao> revisoesSelecionadas;
-	
+	private JSpinner notaSpnr;
+	private JButton okButton;
 
 	/**
 	 * Create the dialog.
 	 */
 	public AtribuirNotas(ComiteServico comiteServico) {
+		setTitle("Atribuir notas");
 		setModal(true);
 		this.comiteServico = comiteServico;
 		this.artigosSobRevisao = comiteServico.getArtigosSobRevisao();
@@ -81,11 +85,13 @@ public class AtribuirNotas extends JDialog {
 					public void valueChanged(ListSelectionEvent e) {
 						if (!e.getValueIsAdjusting()) {
 							updateRevisoesList(artigosList.getSelectedIndex());
+							notaSpnr.setEnabled(true);
+							okButton.setEnabled(true);
 						}					
 					}
 				});
-				listsPanel.setLayout(new GridLayout(0, 2, 0, 0));
 				
+				listsPanel.setLayout(new GridLayout(0, 2, 0, 0));
 				JScrollPane artigosScrlPane = new JScrollPane(artigosList);
 				artigosScrlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 				listsPanel.add(artigosScrlPane);
@@ -101,12 +107,10 @@ public class AtribuirNotas extends JDialog {
 					@Override
 					public void valueChanged(ListSelectionEvent e) {
 						if (!e.getValueIsAdjusting()) {
-							System.out.println("bu");
 						}					
 					}
 				});
-				
-				
+
 				JScrollPane revisoesScrlPane = new JScrollPane(revisoesList);
 				revisoesScrlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 				listsPanel.add(revisoesScrlPane);
@@ -121,6 +125,11 @@ public class AtribuirNotas extends JDialog {
 				btnPane.add(rightBtnPane, BorderLayout.EAST);
 				{
 					JButton prontoButton = new JButton("Pronto");
+					prontoButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent arg0) {
+							dispose();
+						}
+					});
 					rightBtnPane.add(prontoButton);
 					prontoButton.setActionCommand("Cancel");
 				}
@@ -133,12 +142,21 @@ public class AtribuirNotas extends JDialog {
 					leftBtnPane.add(lblAtrubuirNota);
 				}
 				{
-					JSpinner spinner = new JSpinner();
-					spinner.setModel(new SpinnerNumberModel(0, -3, 3, 1));
-					leftBtnPane.add(spinner);
+					notaSpnr = new JSpinner();
+					notaSpnr.setEnabled(false);
+					notaSpnr.setModel(new SpinnerNumberModel(0, -3, 3, 1));
+					leftBtnPane.add(notaSpnr);
 				}
 				{
-					JButton okButton = new JButton("OK");
+					okButton = new JButton("OK");
+					okButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent arg0) {
+							Revisao revisao = revisoesSelecionadas.get(revisoesList.getSelectedIndex());
+							revisao.setNota((int)notaSpnr.getValue());
+							updateRevisoesList(artigosList.getSelectedIndex());
+						}
+					});
+					okButton.setEnabled(false);
 					leftBtnPane.add(okButton);
 					okButton.setActionCommand("OK");
 					getRootPane().setDefaultButton(okButton);
@@ -153,7 +171,16 @@ public class AtribuirNotas extends JDialog {
 		
 		revisoesSelecionadas = artigosSobRevisao.get(selectedArtigoIndex).getRevisoes();
 		
-		for (Revisao revisao : revisoesSelecionadas)
-			revisoesListModel.addElement(comiteServico.getPesquisador(revisao.getIdPesquisador()).getNome());
+		for (Revisao revisao : revisoesSelecionadas) {
+			
+			String element;
+			if (revisao.isAvaliado())
+				element = comiteServico.getPesquisador(revisao.getIdPesquisador()).getNome() + " - Nota: " + Integer.valueOf(revisao.getNota()).toString();
+			else
+				element = comiteServico.getPesquisador(revisao.getIdPesquisador()).getNome() + " - Avaliação pendente";
+			
+			revisoesListModel.addElement(element);
+			revisoesList.setSelectedIndex(selectedArtigoIndex);
+		}
 	}
 }
