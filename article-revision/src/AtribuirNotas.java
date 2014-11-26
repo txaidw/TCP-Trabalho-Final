@@ -29,7 +29,7 @@ public class AtribuirNotas extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private ComiteServico comiteServico;
 	private JList<String> artigosList;
-	DefaultListModel<String> artigosListModel;
+	private DefaultListModel<String> artigosListModel;
 	private JList<String> revisoesList;
 	private DefaultListModel<String> revisoesListModel; 
 	private List<Artigo> artigosSobRevisao;
@@ -180,7 +180,7 @@ public class AtribuirNotas extends JDialog {
 				element = comiteServico.getPesquisador(revisao.getIdPesquisador()).getNome() + " - Avaliação pendente";
 			
 			revisoesListModel.addElement(element);
-			revisoesList.setSelectedIndex(selectedArtigoIndex);
+			revisoesList.setSelectedIndex(0);
 		}
 	}
 }
