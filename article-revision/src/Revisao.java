@@ -2,7 +2,7 @@ public class Revisao {
 
 	private int idArtigo;
 	private int idPesquisador;
-	private int nota;
+	private float nota;
 	private boolean avaliado;
 	
 	public Revisao(int idArtigo, int idPesquisador) {
@@ -28,11 +28,11 @@ public class Revisao {
 		this.idPesquisador = idPesquisador;
 	}
 	
-	public int getNota() {
+	public float getNota() {
 		return nota;
 	}
 	
-	public void setNota(int nota) {
+	public void setNota(float nota) {
 		this.nota = nota;
 		this.avaliado = true;
 	}

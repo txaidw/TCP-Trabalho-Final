@@ -133,6 +133,8 @@ public class Database {
 			save(new Artigo(++id, "Architecture Comformance", p9, c1, "Software Architecture"));
 			save(new Artigo(++id, "Structural Testing", p10, c1, "Software Testing"));
 			
+			syncConferencias();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -153,7 +155,7 @@ public class Database {
 	
 	// setters and getters
 	public Conferencia getConferencia(String conferencia) {
-		return this.conferencias.get(conferencia);
+		return  conferencias.get(conferencia);
 	}
 	
 	public Collection<Conferencia> getAllConferencias() {
@@ -172,6 +174,10 @@ public class Database {
 		return artigos.values();
 	}
 	
+	public Artigo getArtigo(int idArtigo) {
+		return artigos.get(idArtigo);
+	}
+	
 	public List<Artigo> getArtigos(String conferencia) {
 		Collection<Artigo> artigos = this.getAllArtigos();
 		List<Artigo> artigosDaConferencia = new ArrayList<>();
@@ -181,5 +187,17 @@ public class Database {
 			}
 		}
 		return artigosDaConferencia;
+	}
+	
+	private void syncConferencias() {
+		Collection<Artigo> artigos = getAllArtigos();
+		Collection<Conferencia> conferencias = getAllConferencias();
+		
+		for (Conferencia conferencia : conferencias)
+			for (Artigo artigo : artigos) {
+				if (artigo.getConferencia().getSigla().equals(conferencia.getSigla())) {
+					conferencia.getArtigos().add(artigo);	
+				}
+		}
 	}
 }
