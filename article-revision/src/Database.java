@@ -18,6 +18,7 @@ public class Database {
 		pesquisadores = new HashMap<>();
 		conferencias = new HashMap<>();
 		artigos = new HashMap<>();
+		
 		if (initData) {
 			initData();
 		}
@@ -101,7 +102,7 @@ public class Database {
 			Pesquisador p10 = new Pesquisador(++id, "Carlos", "USP", topicosInteresse10);
 			save(p10);
 			
-			// confências
+			// conferências
 			List<Pesquisador> m1 = new ArrayList<>();
 			m1.add(p1); m1.add(p2); m1.add(p3); m1.add(p4); m1.add(p5); m1.add(p6); m1.add(p7);
 			Conferencia c1 = new Conferencia("ICSE", m1);
@@ -170,8 +171,7 @@ public class Database {
 	public Collection<Artigo> getAllArtigos() {
 		return artigos.values();
 	}
-
-
+	
 	public List<Artigo> getArtigos(String conferencia) {
 		Collection<Artigo> artigos = this.getAllArtigos();
 		List<Artigo> artigosDaConferencia = new ArrayList<>();
@@ -182,5 +182,4 @@ public class Database {
 		}
 		return artigosDaConferencia;
 	}
-
 }

@@ -104,7 +104,9 @@ public class ComiteServico {
 		});
 		return artigosSobRevisao;
 	}
-	
+	public Collection<Artigo> getTodosArtigos() {
+		return database.getAllArtigos();
+	}
 	public Pesquisador getPesquisador(int id) {
 		return database.getPesquisador(id);
 	}
@@ -115,6 +117,8 @@ public class ComiteServico {
 		List<Pesquisador> membrosSelecionados = new ArrayList<>();
 		System.out.println("ID: "+artigo.getId());
 		for (Pesquisador pesquisador : candidatos) {
+			System.out.println("PID: "+pesquisador.getId());
+
 			if (!(pesquisador.getId() == artigo.getAutor().getId()) ) {
 				
 				System.out.println("PES: "+pesquisador.getAfiliacao());
@@ -141,7 +145,11 @@ public class ComiteServico {
 	}
 	
 	private List<Pesquisador> ordenaMembrosSelecionados(List<Pesquisador> membrosSelecionados, final Map<Integer, Integer> artigosAlocadosPorPesquisador) {
-		
+		System.out.println("-------------");
+
+		for (Pesquisador pesquisador : membrosSelecionados) {
+			System.out.println(membrosSelecionados.indexOf(pesquisador) +" : "+ pesquisador.getNome() +" : "+ pesquisador.getId() +" : "+ artigosAlocadosPorPesquisador.get(pesquisador.getId()));
+		}
 		Collections.sort(membrosSelecionados, new Comparator<Pesquisador>() {
 			 @Override
 	         public int compare(Pesquisador p1, Pesquisador p2) {
@@ -153,6 +161,11 @@ public class ComiteServico {
 				}
 			 }
 		});
+		
+		System.out.println("--");
+		for (Pesquisador pesquisador : membrosSelecionados) {
+			System.out.println(membrosSelecionados.indexOf(pesquisador) +" : "+ pesquisador.getNome() +" : "+ pesquisador.getId() +" : "+ artigosAlocadosPorPesquisador.get(pesquisador.getId()));
+		}
 		return membrosSelecionados;
 	}
 	
@@ -162,5 +175,9 @@ public class ComiteServico {
 	
 	public List<String> getLog() {
 		return log;
+	}
+	
+	public Conferencia getConferencia(String conferencia) {
+		return this.database.getConferencia(conferencia);
 	}
 }
