@@ -34,7 +34,7 @@ public class ComiteServicoTests {
 		tabelaResposta = new ArrayList<>();
 	
 		tabelaResposta.add(new TabelaResposta(1, 8, 2));
-		tabelaResposta.add(new TabelaResposta(1, 10, -999));
+		tabelaResposta.add(new TabelaResposta(1, 10, -99));
 		tabelaResposta.add(new TabelaResposta(2, 7, 2));
 		tabelaResposta.add(new TabelaResposta(2, 2, 3));
 		tabelaResposta.add(new TabelaResposta(3, 4, -1));
@@ -83,13 +83,10 @@ public class ComiteServicoTests {
 						taNaLista = true;
 					}
 				}
-				assertTrue("Artigo de ID:" + revisao.getIdArtigo() " deveria ser alocado para" + tabela, taNaLista);
+				assertTrue("Artigo de ID:" + revisao.getIdArtigo() + " foi alocado erroneamente para pesquisador de ID:" + revisao.getIdPesquisador(), taNaLista);
 			}
 			comite.getTodosArtigos();
 			
 		}
 	}
-
-	
-	
 }
