@@ -78,7 +78,7 @@ public class AlocarArtigos extends JDialog {
 					alocarButton.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							if (conferenciaCbBx.getItemCount() > 0) {
-								comiteServico.alocaArtigos(conferenciaCbBx.getItemAt(0), (Integer)numRevisoresSpn.getValue());
+								comiteServico.alocaArtigos((String)conferenciaCbBx.getSelectedItem(), (Integer)numRevisoresSpn.getValue());
 								conferenciaCbBx.removeAllItems();
 								for (String siglaConferencia : comiteServico.getConferenciaSiglasNaoAlocadas())
 									conferenciaCbBx.addItem(siglaConferencia);

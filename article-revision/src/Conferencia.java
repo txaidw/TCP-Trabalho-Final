@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Conferencia {
@@ -11,6 +12,7 @@ public class Conferencia {
 		super();
 		this.sigla = sigla;
 		this.membros = membros;
+		this.artigos = new ArrayList<>();
 		this.setSobRevisao(false);
 	}
 

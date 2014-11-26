@@ -88,6 +88,14 @@ public class ComiteServico {
 		return siglas;
 	}
 	
+	public List<String> getConferenciaSiglasSobRevisao() {
+		List<String> siglas = new ArrayList<>();
+		for (Conferencia conferencia : database.getAllConferencias())
+			if (conferencia.isSobRevisao())
+				siglas.add(conferencia.getSigla());
+		return siglas;
+	}
+	
 	public List<Artigo> getArtigosSobRevisao() {
 		Collection<Artigo> artigos = database.getAllArtigos();
 		List<Artigo> artigosSobRevisao = new ArrayList<Artigo>();
@@ -104,11 +112,21 @@ public class ComiteServico {
 		});
 		return artigosSobRevisao;
 	}
+	
 	public Collection<Artigo> getTodosArtigos() {
 		return database.getAllArtigos();
 	}
+	
 	public Pesquisador getPesquisador(int id) {
 		return database.getPesquisador(id);
+	}
+	
+	public List<String> getLog() {
+		return log;
+	}
+	
+	public Conferencia getConferencia(String conferencia) {
+		return this.database.getConferencia(conferencia);
 	}
 	
 	// m√©todos privados
@@ -173,11 +191,34 @@ public class ComiteServico {
 		this.log.add(logMessage);
 	}
 	
-	public List<String> getLog() {
-		return log;
+	
+	// mÈtodos p˙blicos
+	public boolean todosAvaliados(String siglaConferencia) {
+		Conferencia conferencia = getConferencia(siglaConferencia);
+
+		for (Artigo artigo : conferencia.getArtigos())
+			if (artigo.getRevisoes().isEmpty())
+				return false;
+			else
+				for (Revisao revisao : artigo.getRevisoes())
+					if (!revisao.isAvaliado())
+						return false;
+		return true;
 	}
 	
-	public Conferencia getConferencia(String conferencia) {
-		return this.database.getConferencia(conferencia);
+	public float calculaMedia(int idArtigo) {
+		
+		float somatorio = 0;
+		Artigo artigo = database.getArtigo(idArtigo);
+		for (Revisao revisao : artigo.getRevisoes()) {
+			somatorio += (float)revisao.getNota();
+		}
+		float media;
+		if (artigo.getRevisoes().size() > 0)
+			media = somatorio/artigo.getRevisoes().size();
+		else 
+			media = 0;
+		
+		return media;
 	}
 }

@@ -77,6 +77,8 @@ public class JanelaPrincipal {
 		btnSelecionarArtigos.setBounds(316, 11, 143, 71);
 		btnSelecionarArtigos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				SelecionarArtigos selecionarArtigos = new SelecionarArtigos(comite);
+				selecionarArtigos.setVisible(true);
 			}
 		});
 		frmRevisoDeArtigos.getContentPane().add(btnSelecionarArtigos);

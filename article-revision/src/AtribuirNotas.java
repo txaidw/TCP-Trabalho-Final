@@ -90,7 +90,6 @@ public class AtribuirNotas extends JDialog {
 						}					
 					}
 				});
-				
 				listsPanel.setLayout(new GridLayout(0, 2, 0, 0));
 				JScrollPane artigosScrlPane = new JScrollPane(artigosList);
 				artigosScrlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -144,7 +143,7 @@ public class AtribuirNotas extends JDialog {
 				{
 					notaSpnr = new JSpinner();
 					notaSpnr.setEnabled(false);
-					notaSpnr.setModel(new SpinnerNumberModel(0, -3, 3, 1));
+					notaSpnr.setModel(new SpinnerNumberModel(new Float(0.0), new Float(-3.0), new Float(3.0), new Float(0.1)));
 					leftBtnPane.add(notaSpnr);
 				}
 				{
@@ -152,7 +151,7 @@ public class AtribuirNotas extends JDialog {
 					okButton.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
 							Revisao revisao = revisoesSelecionadas.get(revisoesList.getSelectedIndex());
-							revisao.setNota((int)notaSpnr.getValue());
+							revisao.setNota((float)notaSpnr.getValue());
 							updateRevisoesList(artigosList.getSelectedIndex());
 						}
 					});
@@ -175,7 +174,7 @@ public class AtribuirNotas extends JDialog {
 			
 			String element;
 			if (revisao.isAvaliado())
-				element = comiteServico.getPesquisador(revisao.getIdPesquisador()).getNome() + " - Nota: " + Integer.valueOf(revisao.getNota()).toString();
+				element = comiteServico.getPesquisador(revisao.getIdPesquisador()).getNome() + " - Nota: " + Float.valueOf(revisao.getNota()).toString();
 			else
 				element = comiteServico.getPesquisador(revisao.getIdPesquisador()).getNome() + " - Avaliação pendente";
 			
