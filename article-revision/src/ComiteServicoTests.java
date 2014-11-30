@@ -35,7 +35,7 @@ public class ComiteServicoTests {
 	
 		tabelaResposta.add(new TabelaResposta(1, 8, 2));
 		tabelaResposta.add(new TabelaResposta(1, 10, -99));
-		tabelaResposta.add(new TabelaResposta(2, 7, 2));
+		tabelaResposta.add(new TabelaResposta(2, 1, 2));
 		tabelaResposta.add(new TabelaResposta(2, 2, 3));
 		tabelaResposta.add(new TabelaResposta(3, 4, -1));
 		tabelaResposta.add(new TabelaResposta(3, 6, 1));
@@ -57,14 +57,6 @@ public class ComiteServicoTests {
 		
 		List<String> conferencias = comite.getConferenciaSiglas();
 		
-//		while (!conferencias.isEmpty()) {
-//			comite.alocaArtigos(conferencias.get(0), 2);
-//			conferencias.remove(0);
-//
-//			for (String string : comite.getLog()) {
-//		 		System.out.println(string);	
-//			}			
-//		}
 		comite.alocaArtigos("FSE", 2);
 		conferencias.remove(comite.getConferencia("FSE"));
 		comite.alocaArtigos("SBES", 2);

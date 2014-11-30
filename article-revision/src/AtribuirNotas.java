@@ -176,7 +176,7 @@ public class AtribuirNotas extends JDialog {
 			if (revisao.isAvaliado())
 				element = comiteServico.getPesquisador(revisao.getIdPesquisador()).getNome() + " - Nota: " + Float.valueOf(revisao.getNota()).toString();
 			else
-				element = comiteServico.getPesquisador(revisao.getIdPesquisador()).getNome() + " - Avaliação pendente";
+				element = comiteServico.getPesquisador(revisao.getIdPesquisador()).getNome() + " - AvaliaÃ§Ã£o pendente";
 			
 			revisoesListModel.addElement(element);
 			revisoesList.setSelectedIndex(0);

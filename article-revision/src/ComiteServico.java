@@ -192,7 +192,7 @@ public class ComiteServico {
 	}
 	
 	
-	// métodos públicos
+	// mÃ©todos publicos
 	public boolean todosAvaliados(String siglaConferencia) {
 		Conferencia conferencia = getConferencia(siglaConferencia);
 

@@ -42,7 +42,7 @@ public class SelecionarArtigos extends JDialog {
 		initializeGui();
 	}
 
-	// métodos privados
+	// mï¿½todos privados
 	
 	private void initializeGui() {
 		setTitle("Selecionar artigos");
@@ -87,7 +87,7 @@ public class SelecionarArtigos extends JDialog {
 						for (String siglaConferencia : comiteServico.getConferenciaSiglasSobRevisao())
 							conferenciaCb.addItem(siglaConferencia);
 					} else {
-						conferenciaCb.addItem("Nenhuma alocação");
+						conferenciaCb.addItem("Nenhuma alocaÃ§Ã£o");
 						conferenciaCb.setEnabled(false);
 					}
 
@@ -115,8 +115,8 @@ public class SelecionarArtigos extends JDialog {
 									System.out.println(artigo.getTitulo() + media);
 								}
 							} else {
-								JOptionPane optionPane = new JOptionPane("Existem artigos que não foram avaliados.", JOptionPane.WARNING_MESSAGE);
-								JDialog dialog = optionPane.createDialog("O relatório não pode ser gerado");
+								JOptionPane optionPane = new JOptionPane("Existem artigos que nÃ£o foram avaliados.", JOptionPane.WARNING_MESSAGE);
+								JDialog dialog = optionPane.createDialog("O relatÃ³rio nÃ£o pode ser gerado");
 								dialog.setAlwaysOnTop(true);
 								dialog.setVisible(true);
 							}
