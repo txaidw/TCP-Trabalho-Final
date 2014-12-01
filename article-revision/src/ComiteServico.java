@@ -62,15 +62,6 @@ public class ComiteServico {
 		conferencia.setSobRevisao(true);
 		this.addLog("Fim da alocação" + "\n" + "\n");
 	}
-
-
-	public void atribuiNota(Revisao revisao) {
-
-	}
-
-	public void selecionaArtigos(String conferencia) {
-
-	}
 	
 	// getters
 	public List<String> getConferenciaSiglas() {
