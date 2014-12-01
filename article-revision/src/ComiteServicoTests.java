@@ -1,14 +1,7 @@
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.swing.text.StyledEditorKit.BoldAction;
 
 import org.junit.Before;
 import org.junit.Test;
